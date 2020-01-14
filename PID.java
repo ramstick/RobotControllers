@@ -1,5 +1,14 @@
+/**
+ *  An implementation of the PID controller
+ *  Create a PID object setting some parameter and end state using: 
+ *      PID controller = new PID(0.1, 0.2,0.3, 90,0.01);
+ *  Every iteration you want to control your motor call:
+ *      motor.setSpeed(controller.output(currentPosition, currentTime))
+ *  Where motor is your motor class and setSpeed sets the speed of your motor. currentPosition is the current position and currentTime is the current time.
+ *  
+ */
 public class PID{
-    
+
     double Kp, Kd, Ki;
     double intE, dE;
 
