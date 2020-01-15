@@ -1,3 +1,5 @@
+import sun.awt.www.content.image.gif;
+
 /**
  *  An implementation of the PID controller
  *  Create a PID object setting some parameter and end state using: 
@@ -16,6 +18,8 @@ public class PID{
     double lastT, lastE;
 
     double tolerance;
+    
+    double constantSped;
     /**
      * 
      * @param Kp - The proportional parameter
@@ -23,8 +27,9 @@ public class PID{
      * @param Ki - The integral parameter
      * @param end - The desired state
      * @param tolerance - How much it error it will tolerate and call it done.
+     * @param constSped - Once it has reached its desired state it will just output this speed
      */
-    public PID(double Kp, double Kd, double Ki, double end, double tolerance){
+    public PID(double Kp, double Kd, double Ki, double end, double tolerance, double constSped){
         this.Kp = Kp;
         this.Kd = Kd;
         this.Ki = Ki;
@@ -33,6 +38,7 @@ public class PID{
         this.dE = 0;
         intE = 0;
         this.tolerance = tolerance;
+        this.constantSped = constSped;
     }
     /**
      * 
@@ -43,7 +49,7 @@ public class PID{
     public double output(double current, double timeT){
         
         if(checkDone(current)){
-            return 0;
+            return constantSped;
         }
         double error = end - current;
         double dt = timeT - lastT;
