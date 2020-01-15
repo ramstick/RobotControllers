@@ -47,10 +47,11 @@ public class PID{
         }
         double error = end - current;
         double dt = timeT - lastT;
+        double dE = error - lastE;
         intE += error * dt;
         lastE = error;
         lastT = timeT;
-        return Kp * error + Ki * intE + Kd * (error-lastE) / dt;
+        return Kp * error + Ki * intE + Kd * dE / dt;
     }
     /**
      * 
