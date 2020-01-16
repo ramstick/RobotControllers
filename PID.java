@@ -19,7 +19,7 @@ public class PID{
 
     double tolerance;
     
-    double constantSped;
+    double feedForward;
     /**
      * 
      * @param Kp - The proportional parameter
@@ -27,9 +27,9 @@ public class PID{
      * @param Ki - The integral parameter
      * @param end - The desired state
      * @param tolerance - How much it error it will tolerate and call it done.
-     * @param constSped - Once it has reached its desired state it will just output this speed
+     * @param feedForward - 
      */
-    public PID(double Kp, double Kd, double Ki, double end, double tolerance, double constSped){
+    public PID(double Kp, double Kd, double Ki, double end, double tolerance, double feedForward){
         this.Kp = Kp;
         this.Kd = Kd;
         this.Ki = Ki;
@@ -38,7 +38,7 @@ public class PID{
         this.dE = 0;
         intE = 0;
         this.tolerance = tolerance;
-        this.constantSped = constSped;
+        this.feedForward = feedForward;
     }
     /**
      * 
@@ -49,15 +49,16 @@ public class PID{
     public double output(double current, double timeT){
         
         if(checkDone(current)){
-            return constantSped;
+            return feedForward;
         }
+        
         double error = end - current;
         double dt = timeT - lastT;
         double dE = error - lastE;
         intE += error * dt;
         lastE = error;
         lastT = timeT;
-        return Kp * error + Ki * intE + Kd * dE / dt;
+        return Kp * error + Ki * intE + Kd * dE / dt + feedForward;
     }
     /**
      * 
